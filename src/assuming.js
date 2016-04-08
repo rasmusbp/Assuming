@@ -22,7 +22,7 @@ export default function assuming( condition ) {
     }
 
     function matches( value, cb ) {
-        if ( resolve(value) === resolvedCondition ) {
+        if ( resolve(value, resolvedCondition) === resolvedCondition ) {
             valueHolder = resolve(cb, resolvedCondition);
             return noopChain;
         }
@@ -30,7 +30,7 @@ export default function assuming( condition ) {
     }
 
     function otherwise( cb ) {
-        valueHolder = resolve(cb, resolvedCondition);
+        valueHolder = resolve(cb);
         return {value};
     }
 
