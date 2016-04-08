@@ -133,8 +133,11 @@ ifCreditCardIsValid(processOrder).otherwise(denyOrder);
 ```
 
 ## Contribute
-Contributions are welcome. Here's what you need to know to get started:
+Contributions are welcome. 
+Here's what you need to know to get started:
 
-*Run tests:* `npm run test`
-*Run tests with a watcher:* `npm run testDev`
-*Build:* `npm run build`
+**Run tests:** `npm run test`
+
+**Run tests with a watcher:** `npm run testDev`
+
+**Build:** `npm run build`
