@@ -4,7 +4,7 @@
 * License: ISC
 
 ## About
-A small ~0.4K utility method for chaining if and switch statements
+A small ~0.5K utility method for chaining if and switch statements
 
 I've always seen the following as a bit of a syntactical anti-pattern:
 ```js
