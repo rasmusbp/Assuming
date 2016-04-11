@@ -129,6 +129,89 @@ describe('simple if/else statements', function () {
 
     });
 
+    it('should return the value of the `then` method if `and` condition is also truthy', () => {
+
+        const result = assuming(1 === 1)
+            .and(2 === 2)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result).to.equal('ok');
+
+    });
+
+    it('should return the value of the `otherwise` method if `and` condition is falsy', () => {
+
+        const result = assuming(1 === 1)
+            .and(2 === 0)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result).to.equal('not ok');
+
+    });
+
+    it('should be able to chain `and` methods ', () => {
+
+        const result = assuming(1 === 1)
+            .and(2 === 2)
+            .and(3 === 3)
+            .and(4 === 4)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result).to.equal('ok');
+
+        const result2 = assuming(1 === 1)
+            .and(2 === 2)
+            .and(3 === 3)
+            .and(3 === 4)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result2).to.equal('not ok');
+
+    });
+
+    it('should return the value of the `then` method if either "main" condition or `or` condition is truthy', () => {
+
+        const result = assuming(1 === 1)
+            .or(2 === 2)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result).to.equal('ok');
+
+
+        const result2 = assuming(1 === 0)
+            .or(2 === 2)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result2).to.equal('ok');
+
+    });
+
+    it('should return the value of the `otherwise` method if all of the `or` condition is false', () => {
+
+        const result = assuming(1 === 0)
+            .or(2 === 0)
+            .or(3 === 0)
+            .or(4 === 0)
+            .then('ok')
+            .otherwise('not ok')
+            .value();
+
+        expect(result).to.equal('not ok');
+
+    });
+
 });
 
 describe('complex if/else if/else statements', function () {

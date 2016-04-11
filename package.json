@@ -1,6 +1,6 @@
 {
   "name": "assuming",
-  "version": "1.0.0",
+  "version": "0.0.9",
   "description": "Utility method for chaining if and switch statements",
   "main": "index.js",
   "scripts": {
