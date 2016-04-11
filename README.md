@@ -79,7 +79,7 @@ console.log(result); // -> 'return value from method'
 If chained to a `then` method the `otherwise` method will act like the "else" block:
 ```js
 const value = 1;
-const result = asumming(value === 1)
+const result = asumming(value !== 1)
         .then('is one')
         .otherwise('is NOT one').value();
 
