@@ -4,7 +4,7 @@
 * License: ISC
 
 ## About
-[WIP] A small ~0.5K utility method for chaining if and switch statements
+A small, simple, but powerful ~0.5K utility method for chaining if and switch statements
 
 I've always seen the following as a bit of a syntactical anti-pattern:
 ```js
@@ -81,7 +81,7 @@ console.log(result); // -> 'return value from method'
 If chained to a `then` method the `otherwise` method will act like the "else" block:
 ```js
 const value = 1;
-const result = asumming(value === 1)
+const result = asumming(value !== 1)
         .then('is one')
         .otherwise('is NOT one').value();
 
