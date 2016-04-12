@@ -1,9 +1,9 @@
 export default function assuming( condition ) {
 
     // chain states
-    let isResolved = false;
-    let valueHolder;
-    let resolvedCondition = resolve(condition);
+    let _isChainResolved = false;
+    let _valueHolder;
+    let _condition = resolve(condition);
 
     const noopChain = {
         assuming: noop,
@@ -18,43 +18,41 @@ export default function assuming( condition ) {
     return { then, matches, or, and };
 
     function then( cb ) {
-        if ( resolvedCondition ) {
-            isResolved = true;
-            valueHolder = resolve(cb);
-            return noopChain;
-        }
-        return { assuming, otherwise, value };
+        return _condition
+                ? resolveChain(cb)
+                : { assuming, otherwise, value };
     }
 
-    function or( orCondition ) {
-        const resolvedOrCondtion = resolve( orCondition );
-        if ( !(resolvedCondition || resolvedOrCondtion) ) {
-            return noopChain;
-        }
-        resolvedCondition = resolvedOrCondtion;
-        return { then, matches, or, and };
+    function or( condition ) {
+        return (_condition = _condition || resolve( condition ))
+                ? { then, matches, or, and }
+                : noopChain;
 
     }
 
-    function and( andCondition ) {
-        return (resolvedCondition && resolve( andCondition )) ? { then, matches, or, and } : noopChain;
+    function and( condition ) {
+        return (_condition = _condition && resolve( condition ))
+                ? { then, matches, or, and }
+                : noopChain;
     }
 
     function matches( value, cb ) {
-        if ( resolve(value, resolvedCondition) === resolvedCondition ) {
-            isResolved = true;
-            valueHolder = resolve(cb, resolvedCondition);
-            return noopChain;
-        }
-        return { matches, otherwise, value };
+        return ( resolve(value, _condition) === _condition )
+                ? resolveChain(cb)
+                : { matches, otherwise, value };
     }
 
     function otherwise( cb ) {
-        if ( !isResolved ) valueHolder = resolve(cb);
+        resolveChain(cb);
         return {value};
     }
 
-    function value() { return valueHolder }
+    function resolveChain(cb) {
+        if ( !_isChainResolved ) {_valueHolder = resolve(cb, _condition); }
+        _isChainResolved = true;
+        return noopChain;
+    }
+    function value() { return _valueHolder }
     function resolve( cb, arg ) { return (typeof cb === 'function') ? cb.call(null, arg) : cb }
     function noop() { return noopChain }
 

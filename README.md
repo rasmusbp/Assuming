@@ -126,11 +126,24 @@ const logIfTrue = onlyIfTrue(() => console.log('it was true!'));
 
 logIfTrue(value === 1); // -> 'is was true'
 
-// .. or
+// .. in a checkout flow
 const ifTrue = _.curry((condition, fn) => assuming(condition).then(fn) );
 const ifCreditCardIsValid = ifTrue(isCreditCardValid.bind(null, creditCardInfo));
 
 ifCreditCardIsValid(processOrder).otherwise(denyOrder);
+
+```
+```js
+// in an abstracted authentication module
+const ifAuthenticatedAnd = _.curry((condition, fn) => assuming(condition).and(isAuthenticated).then(fn));
+const ifAuthenticatedAndAdmin = ifAuthenticatedAndAdmin(isAdmin);
+
+// in "Orders" model
+const getAllOrders = () => ifAuthenticatedAndAdmin(/* impl. of `getAllOrders` */).otherwise(denyAccess).value();
+
+// in app logic
+const orders = getAllOrders();
+
 ```
 
 ## Contribute
