@@ -25,14 +25,14 @@ export default function assuming( condition ) {
 
     function or( condition ) {
         return (_condition = _condition || resolve( condition ))
-                ? { then, matches, or, and }
+                ? { then, or, and }
                 : _fallthrough;
 
     }
 
     function and( condition ) {
         return (_condition = _condition && resolve( condition ))
-                ? { then, matches, or, and }
+                ? { then, or, and }
                 : _fallthrough;
     }
 
