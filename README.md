@@ -4,7 +4,7 @@
 * License: ISC
 
 ## About
-A small (~0.3K gzipped), simple, but powerful  utility method for chaining if and switch statements
+A small *(~0.3K gzipped and dependency free)*, simple, but powerful utility method for chaining if and switch statements
 
 I've always seen the following as a bit of a syntactical anti-pattern:
 ```js
@@ -179,7 +179,7 @@ const ifCreditCardIsValid = ifTrue(isCreditCardValid.bind(null, creditCardInfo))
 ifCreditCardIsValid(processOrder).otherwise(denyOrder);
 
 ```
-Below is an example of how utilizing the `and` method to can create a permission layer to any function in an application:
+Below is an example of how utilizing the `and` method can add a permission layer to any function in an application:
 ```js
 // in an abstracted authentication module
 const ifAuthenticatedAnd = _.curry((condition, fn) => assuming(condition).and(isAuthenticated).then(fn));
