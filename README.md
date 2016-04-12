@@ -8,7 +8,7 @@ A small *(~0.3K gzipped and dependency free)*, simple, but powerful utility meth
 
 I've always seen the following as a bit of a syntactical anti-pattern:
 ```js
-var myValue;
+let myValue;
 
 if ( somethingIsTrue ) {
    myValue = 'it was true';
@@ -31,7 +31,7 @@ blocks. Things can quickly become error prone. Even if the blocks has test cover
 to repetitions and bad readability (in more complex blocks obviously). Same goes for switch/case blocks.
 
 I've found my self trying to abstract this away on every single project I've worked on, so I decided to write a simple module that solve this *(for me)*,
-once for all - and perhaps others will find it useful as well.
+once for all - and hopefully others will find it useful as well.
 
 The idea is that if/else/switch/case block gets *(where ever it makes sense)* replaced by method chains.
 The chain abstracts the condition checks away.
@@ -39,17 +39,24 @@ Invoking `value()` at the end of the chain will return the resolved value of the
 
 Consider the below example:
 ```js
-const myValue = asumming( somethingIsTrue )
-                .then('it was true')
-                .otherwise('it was false')
-                .value();
+let a;
 
-doSomething(myValue);
+if ( somethingIsTrue ) {
+   a = 'it was true';
+} else {
+   a = 'it was false';
+}
+
+// .. versus
+const b = asumming( somethingIsTrue )
+            .then('it was true')
+            .otherwise('it was false')
+            .value();
+
+console.log( a === b ); // <- true
 ```
-
-This example will have the exact same output as the one with the if/else blocks. Only difference being that we do not create
-a "placeholder" variable and we keep the amounts of repetitions to zero.
-The `assuming`, `then` and `otherwise` methods can also take a function as an argument.
+As it displays the output of the two examples are exactly the same. Only difference being that we do not create
+a "placeholder" variable and we keep the amounts of repetitions to zero when using Asumming.
 
 **Disclaimer:** Assuming is written as an ES6 module and is expected to be processed as a module.
 
