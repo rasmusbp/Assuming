@@ -48,6 +48,7 @@ if ( somethingIsTrue ) {
 }
 
 // .. versus
+
 const b = asumming( somethingIsTrue )
             .then('it was true')
             .otherwise('it was false')
