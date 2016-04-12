@@ -51,11 +51,14 @@ This example will have the exact same output as the one with the if/else blocks.
 a "placeholder" variable and we keep the amounts of repetitions to zero.
 The `assuming`, `then` and `otherwise` methods can also take a function as an argument.
 
-**Disclaimer:** Assuming is written as an ES6 module however the minified version is transpiled to follow the
-Universal Module Definition (UMD).
+**Disclaimer:** Assuming is written as an ES6 module and is expected to be processed as a module.
 
 ```js
-import assuming from './assuming';
+// CommonJS (Node)
+var assuming = require('assuming');
+
+// ES6 (i.e. via a module loader)
+import assuming from 'assuming';
 ```
 
 ## Examples
