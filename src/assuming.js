@@ -5,7 +5,7 @@ export default function assuming( condition ) {
     let _valueHolder;
     let _condition = resolve(condition);
 
-    const noopChain = {
+    const _fallthrough = {
         assuming: noop,
         then: noop,
         matches: noop,
@@ -26,14 +26,14 @@ export default function assuming( condition ) {
     function or( condition ) {
         return (_condition = _condition || resolve( condition ))
                 ? { then, matches, or, and }
-                : noopChain;
+                : _fallthrough;
 
     }
 
     function and( condition ) {
         return (_condition = _condition && resolve( condition ))
                 ? { then, matches, or, and }
-                : noopChain;
+                : _fallthrough;
     }
 
     function matches( value, cb ) {
@@ -50,10 +50,10 @@ export default function assuming( condition ) {
     function resolveChain(cb) {
         if ( !_isChainResolved ) {_valueHolder = resolve(cb, _condition); }
         _isChainResolved = true;
-        return noopChain;
+        return _fallthrough;
     }
     function value() { return _valueHolder }
     function resolve( cb, arg ) { return (typeof cb === 'function') ? cb.call(null, arg) : cb }
-    function noop() { return noopChain }
+    function noop() { return _fallthrough }
 
 }

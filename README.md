@@ -59,6 +59,8 @@ import assuming from './assuming';
 ```
 
 ## Examples
+
+####Simple if statements
 Simple example of a chain replacing a simple if statement:
 ```js
 const value = 1;
@@ -86,6 +88,47 @@ const result = asumming(value === 1)
 console.log(result); // -> 'is NOT one'
 ```
 
+####And / or operators
+Instead of using the `&&` or `||` operators inline in the `assuming` method, you can chain `and` and `or` methods instead:
+```js
+const value = 1;
+const anotherValue = 2;
+const result = asumming(value === 1)
+        .and(anotherValue === 2)
+        .then('both are ok')
+        .otherwise('nope')
+        .value();
+
+console.log(result); // -> 'both are ok'
+
+// .. or
+
+const value = 1;
+const anotherValue = 2;
+const result = asumming(value === 42)
+        .or(anotherValue === 2)
+        .then('either is ok')
+        .otherwise('nope')
+        .value();
+
+console.log(result); // -> 'either is ok'
+```
+
+The `and` and `or` methods can of course be chained as pleased:
+```js
+const value = 1;
+const anotherValue = 2;
+const allIsOk = true;
+const result = asumming(value === 42)
+        .and(anotherValue === 2)
+        .or(allIsOk)
+        .then('it is ok')
+        .otherwise('nope')
+        .value();
+
+console.log(result); // -> 'it is ok'
+```
+####Else / if
 Chaining another `assuming` method acts like the "else if" block:
 ```js
 const value = 3;
@@ -99,7 +142,7 @@ const result = asumming(value === 1)
 
 console.log(result); // -> 'is three'
 ```
-
+####Switch statements
 An alternative approach to the above is to use the `matches` method. The idea of the method
 is to replace a switch/case block. By using this approach you get rid of all the `assuming(x === y).then(z)` chains,
 and keep the condition checks and assignments in one method.
@@ -117,7 +160,7 @@ const result = assuming(value)
 
 console.log(result); // -> 'is two'
 ```
-
+####Functional patterns
 Simple example of how Assuming can be leveraged in a functional design pattern:
 ```js
 const value = 1;
@@ -133,6 +176,7 @@ const ifCreditCardIsValid = ifTrue(isCreditCardValid.bind(null, creditCardInfo))
 ifCreditCardIsValid(processOrder).otherwise(denyOrder);
 
 ```
+Below is an example of how utilizing the `and` method to can create a permission layer to any function in an application:
 ```js
 // in an abstracted authentication module
 const ifAuthenticatedAnd = _.curry((condition, fn) => assuming(condition).and(isAuthenticated).then(fn));
