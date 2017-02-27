@@ -17,9 +17,9 @@ export default function assuming( condition ) {
 
     return { then, matches, or, and };
 
-    function then( cb ) {
+    function then( expr ) {
         return _condition
-                ? resolveChain(cb)
+                ? resolveChain(expr)
                 : { assuming, otherwise, value };
     }
 
@@ -36,24 +36,24 @@ export default function assuming( condition ) {
                 : _fallthrough;
     }
 
-    function matches( value, cb ) {
+    function matches( value, expr ) {
         return ( resolve(value, _condition) === _condition )
-                ? resolveChain(cb)
+                ? resolveChain(expr)
                 : { matches, otherwise, value };
     }
 
-    function otherwise( cb ) {
-        resolveChain(cb);
+    function otherwise( expr ) {
+        resolveChain(expr);
         return {value};
     }
 
-    function resolveChain(cb) {
-        if ( !_isChainResolved ) {_valueHolder = resolve(cb, _condition); }
+    function resolveChain(expr) {
+        if ( !_isChainResolved ) {_valueHolder = resolve(expr, _condition); }
         _isChainResolved = true;
         return _fallthrough;
     }
     function value() { return _valueHolder }
-    function resolve( cb, arg ) { return (typeof cb === 'function') ? cb.call(null, arg) : cb }
+    function resolve( expr, arg ) { return (typeof expr === 'function') ? expr.call(null, arg) : expr }
     function noop() { return _fallthrough }
 
 }

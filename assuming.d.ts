@@ -1,43 +1,33 @@
-interface IThenCallback {
-    ( cb: Function | any ): {
+interface IAssumable<T> {
+    then<U>(expr: any) : {
         assuming: IAssuming,
-        otherwise: IOtherwiseCallback,
-        value<T>(): T
+        otherwise(expr: any): {
+            value<P>() : P | U
+        },
+        value<P>() : P | U
+    };
+    matches: IMatchesCallback;
+    and: IAndOrCallback;
+    or: IAndOrCallback;
+}
+
+interface IMatchesCallback<T> {
+    <T>(expr: () => T | T) : {
+        matches: IMatchesCallback
+        otherwise<U>(expr: () => U | T): {
+            value<P>(): P | T
+        },
+        value: <P>() => P | T
     }
 }
 
-interface IOtherwiseCallback {
-    ( cb: Function | any ): {
-        value<T>(): T
-    }
-}
-
-interface IMatchesCallback {
-    (cb: Function | any, value: any ): {
-        otherwise: IOtherwiseCallback,
-        value<T>(): T
-    }
-}
-
-interface IAndOrCallback {
-    (cb: Function | any): {
-        then: IThenCallback,
+interface IAndOrCallback<T> {
+    <T>(expr: () => T | T) : {
         or: IAndOrCallback,
         and: IAndOrCallback
     }
 }
 
 export interface IAssuming {
-    ( condition: any ) : {
-
-        // Then method
-        then<T>(cb: () => T | any) : {
-            assuming: IAssuming,
-            otherwise<T>(cb: () => T | any): {
-                value<P>(): T | P
-            },
-            value<P>(): P
-        }
-
-    }
+    ( condition: any ) : IAssumable;
 }

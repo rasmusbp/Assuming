@@ -2,7 +2,7 @@
   "name": "assuming",
   "version": "1.0.0",
   "description": "Utility method for chaining if and switch statements",
-  "main": "dist/assuming.min.js",
+  "main": "./dist/assuming.min.js",
   "scripts": {
     "test": "mocha ./test/test.js --compilers js:babel-register",
     "build": "npm test && (babel ./src/assuming.js | uglifyjs -mc > ./dist/assuming.min.js)",
