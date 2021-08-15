@@ -6,7 +6,8 @@
 ## About
 A small *(~0.3K gzipped and dependency free)*, simple, but powerful utility method for chaining if and switch statements
 
-I've always seen the following as a bit of a syntactical anti-pattern:
+Everything here is meant as a fun thought experiment on how to challenge syntactical patterns
+Consider the below as a syntactical anti-pattern:
 ```js
 let myValue;
 
@@ -30,8 +31,7 @@ The specific examples above could of course be boiled down to a few line using t
 blocks. Things can quickly become error prone. Even if the blocks has test coverage, I still find it a syntactical anti-pattern due
 to repetitions and bad readability (in more complex blocks obviously). Same goes for switch/case blocks.
 
-I've found my self trying to abstract this away on every single project I've worked on, so I decided to write a simple module that solve this *(for me)*,
-once for all - and hopefully others will find it useful as well.
+I decided to write a simple module that solve this *(for me)* - and hopefully others will find it useful as well.
 
 The idea is that if/else/switch/case block gets *(where ever it makes sense)* replaced by method chains.
 The chain abstracts the condition checks away.
